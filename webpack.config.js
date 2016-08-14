@@ -68,10 +68,6 @@ module.exports = {
     },
 
     plugins: [
-        // new webpack.ProvidePlugin({
-        //   $: 'jquery',
-        //   jQuery: 'jquery'
-        // }),
         new ExtractTextPlugin('bundle.css', {
             allChunks: true,
             disable: process.env.NODE_ENV == 'development'

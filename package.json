@@ -1,7 +1,7 @@
 {
-  "name": "simple-online-shop",
+  "name": "google-tasks-app",
   "version": "0.0.1",
-  "description": "Simple Online Shop",
+  "description": "Google tasks application",
   "scripts": {
     "build": "NODE_ENV=development webpack",
     "watch": "NODE_ENV=development webpack --watch",
@@ -12,8 +12,6 @@
     "name": "Sergey Illarionov <easthunch@gmail.com>"
   },
   "dependencies": {
-    "classnames": "^2.2.5",
-    "json-loader": "^0.5.4",
     "less": "^2.7.1",
     "material-ui": "^0.15.2",
     "react": "^15.2.1",
@@ -32,6 +30,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "image-webpack-loader": "^1.8.0",
+    "json-loader": "^0.5.4",
     "less-loader": "^2.2.2",
     "react-hot-loader": "3.0.0-beta.2",
     "style-loader": "^0.13.0",
