@@ -26,8 +26,6 @@ const SessionStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(action => {
-    console.log(action.type, action);
-
     switch (action.type) {
         case AppConstants.SESSION_AUTHORIZE_SUCCESS: {
             _isLoggedIn = true;

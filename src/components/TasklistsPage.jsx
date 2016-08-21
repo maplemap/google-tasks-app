@@ -1,7 +1,7 @@
 import React from 'react';
 
-// import TaskListsStore from '../stores/TaskListsStore';
-// import TaskListsActions from '../actions/TaskListsActions';
+import TaskListsStore from '../stores/TaskListsStore';
+import TaskListsActions from '../actions/TaskListActions';
 
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -12,54 +12,53 @@ import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
-// import TaskListCreateModal from './TaskListCreateModal.jsx';
+import TaskListCreateModal from './TaskListCreateModal.jsx';
 
 import './TasklistsPage.less';
 
 function getStateFromFlux() {
-    // return {
-    //     taskLists: TaskListsStore.getTaskLists()
-    // };
+    return {
+        taskLists: TaskListsStore.getTaskLists()
+    };
 }
 
 class TasklistsPage extends React.Component {
     constructor(props) {
         super(props);
 
-        // this.state = getStateFromFlux();
         this.state = {
+            taskLists: getStateFromFlux().taskLists,
             isCreatingTaskList: false
         };
-    }
 
-    componentWillMount() {
-        // TaskListsActions.loadTaskLists();
+        TaskListsActions.loadTaskLists();
     }
 
     componentDidMount() {
-        // TaskListsStore.addChangeListener(this._onChange);
+        TaskListsStore.addChangeListener(this._onChange);
     }
 
     componentWillUnmount() {
-        // TaskListsStore.removeChangeListener(this._onChange);
+        TaskListsStore.removeChangeListener(this._onChange);
     }
 
-    handleAddTaskList() {
-        // this.setState({ isCreatingTaskList : true });
+    handleAddTaskList = () => {
+        this.setState({ isCreatingTaskList : true });
     }
 
-    handleClose() {
-        // this.setState({ isCreatingTaskList : false });
+    handleClose = () => {
+        this.setState({ isCreatingTaskList : false });
     }
 
-    handleTaskListSubmit(taskList) {
-        // TaskListsActions.createTaskList(taskList);
+    handleTaskListSubmit = (taskList) => {
+        TaskListsActions.createTaskList(taskList);
 
-        // this.setState({ isCreatingTaskList : false });
+        this.setState({ isCreatingTaskList : false });
     }
 
     render() {
         const { router } = this.context;
+
 
         return (
             <div className='TasklistsPage'>
@@ -82,6 +81,21 @@ class TasklistsPage extends React.Component {
                         <Divider />
                         <List className='TasklistsPage__list'>
                             <Subheader>Task Lists</Subheader>
+                            {
+                                this.state.taskLists.map(list =>
+                                    <ListItem
+                                        key={list.id}
+                                        leftIcon={<FolderIcon />}
+                                        primaryText={list.name}
+                                        onClick={router.push.bind(null,`lists/${list.id}`)}
+                                    />
+                                )
+                            }
+                            <ListItem
+                                leftIcon={<AddIcon />}
+                                primaryText="Create new list"
+                                onClick={this.handleAddTaskList}
+                            />
                         </List>
                         <Divider />
                         <List className='TasklistsPage__list'>
@@ -96,13 +110,18 @@ class TasklistsPage extends React.Component {
                 <div className='TasklistsPage__tasks'>
                     {this.props.children}
                 </div>
+                <TaskListCreateModal
+                    isOpen={this.state.isCreatingTaskList}
+                    onSubmit={this.handleTaskListSubmit}
+                    onClose={this.handleClose}
+                />
             </div>
         );
     }
 
-    // _onChange() {
-    //     this.setState(getStateFromFlux());
-    // }
+    _onChange = () => {
+        this.setState(getStateFromFlux());
+    }
 };
 
 TasklistsPage.contextTypes = {
