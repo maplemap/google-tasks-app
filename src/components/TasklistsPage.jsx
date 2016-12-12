@@ -1,8 +1,5 @@
 import React from 'react';
 
-import TaskListsStore from '../stores/TaskListsStore';
-import TaskListsActions from '../actions/TaskListActions';
-
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
@@ -12,53 +9,12 @@ import ExitIcon from 'material-ui/svg-icons/action/exit-to-app';
 import FolderIcon from 'material-ui/svg-icons/file/folder';
 import AddIcon from 'material-ui/svg-icons/content/add';
 
-import TaskListCreateModal from './TaskListCreateModal.jsx';
-
 import './TasklistsPage.less';
 
-function getStateFromFlux() {
-    return {
-        taskLists: TaskListsStore.getTaskLists()
-    };
-}
-
 class TasklistsPage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            taskLists: getStateFromFlux().taskLists,
-            isCreatingTaskList: false
-        };
-
-        TaskListsActions.loadTaskLists();
-    }
-
-    componentDidMount() {
-        TaskListsStore.addChangeListener(this._onChange);
-    }
-
-    componentWillUnmount() {
-        TaskListsStore.removeChangeListener(this._onChange);
-    }
-
-    handleAddTaskList = () => {
-        this.setState({ isCreatingTaskList : true });
-    }
-
-    handleClose = () => {
-        this.setState({ isCreatingTaskList : false });
-    }
-
-    handleTaskListSubmit = (taskList) => {
-        TaskListsActions.createTaskList(taskList);
-
-        this.setState({ isCreatingTaskList : false });
-    }
 
     render() {
         const { router } = this.context;
-
 
         return (
             <div className='TasklistsPage'>
@@ -82,7 +38,7 @@ class TasklistsPage extends React.Component {
                         <List className='TasklistsPage__list'>
                             <Subheader>Task Lists</Subheader>
                             {
-                                this.state.taskLists.map(list =>
+                                this.props.taskLists.map(list =>
                                     <ListItem
                                         key={list.id}
                                         leftIcon={<FolderIcon />}
@@ -94,7 +50,7 @@ class TasklistsPage extends React.Component {
                             <ListItem
                                 leftIcon={<AddIcon />}
                                 primaryText="Create new list"
-                                onClick={this.handleAddTaskList}
+                                onClick={this.props.onAddTaskList}
                             />
                         </List>
                         <Divider />
@@ -102,25 +58,16 @@ class TasklistsPage extends React.Component {
                             <ListItem
                                 leftIcon={<ExitIcon />}
                                 primaryText="Log out"
-                                onClick={this.handleLogOut}
+                                onClick={this.props.onLogOut}
                             />
                         </List>
                     </List>
                 </div>
                 <div className='TasklistsPage__tasks'>
-                    {this.props.children}
+                    {this.props.page}
                 </div>
-                <TaskListCreateModal
-                    isOpen={this.state.isCreatingTaskList}
-                    onSubmit={this.handleTaskListSubmit}
-                    onClose={this.handleClose}
-                />
             </div>
         );
-    }
-
-    _onChange = () => {
-        this.setState(getStateFromFlux());
     }
 };
 

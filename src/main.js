@@ -7,11 +7,11 @@ import SessionStore from './stores/SessionStore';
 import './styles/main.less';
 
 import App from './App.jsx';
-import LoginPage from './components/LoginPage.jsx';
+import LoginPage from './containers/LoginPage.jsx';
 import LoggedInLayout from './components/LoggedInLayout.jsx';
 import AboutPage from './components/AboutPage.jsx';
-import TasklistsPage from './components/TasklistsPage.jsx';
-import TasksPage from './components/TasksPage.jsx';
+import TasklistsPage from './containers/TasklistsPage.jsx';
+import TasksPage from './containers/TasksPage.jsx';
 
 if (module.hot) {
     module.hot.accept();
