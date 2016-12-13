@@ -6,6 +6,7 @@ import AppConstants from '../constants/AppConstants';
 const CHANGE_EVENT = 'change';
 
 let _tasks = [];
+let _isLoading = true;
 let _error = null;
 
 function formatTask(data) {
@@ -24,6 +25,10 @@ const TasksStore = Object.assign({}, EventEmitter.prototype, {
         return _tasks;
     },
 
+    isLoadingTasks() {
+        return _isLoading;
+    },
+
     emitChange() {
         this.emit(CHANGE_EVENT);
     },
@@ -39,8 +44,16 @@ const TasksStore = Object.assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function(action) {
     switch (action.type) {
+        case AppConstants.TASKS_LOAD_REQUEST: {
+            _tasks = [];
+            _isLoading = true;
+
+            TasksStore.emitChange();
+            break;
+        }
         case AppConstants.TASKS_LOAD_SUCCESS: {
             _tasks = action.items.map(formatTask);
+            _isLoading = false;
 
             TasksStore.emitChange();
             break;
@@ -48,6 +61,7 @@ AppDispatcher.register(function(action) {
         case AppConstants.TASKS_LOAD_FAIL: {
             _tasks = [];
             _error = action.error;
+            _isLoading = false;
 
             TasksStore.emitChange();
             break;

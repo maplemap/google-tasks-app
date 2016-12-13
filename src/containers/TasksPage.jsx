@@ -12,7 +12,8 @@ import TaskCreateModal from '../components/TaskCreateModal.jsx';
 
 function getStateFromFlux() {
     return {
-        tasks: TasksStore.getTasks()
+        tasks: TasksStore.getTasks(),
+        isLoadingTasks: TasksStore.isLoadingTasks()
     };
 }
 
@@ -21,7 +22,7 @@ class TasksPageContainer extends React.Component {
         super(props);
 
         this.state = {
-            tasks: getStateFromFlux().tasks,
+            ...getStateFromFlux(),
             isCreatingTask: false
         };
 
@@ -80,6 +81,7 @@ class TasksPageContainer extends React.Component {
                 <TasksPage
                     // taskList={this.state.taskList}
                     tasks={this.state.tasks}
+                    isLoadingTasks={this.state.isLoadingTasks}
                     // onUpdateTaskList={this.handleUpdateTaskList}
                     onAddTask={this.handleAddTask}
                     // onDeleteTaskList={this.handleDeleteTaskList}

@@ -1,4 +1,4 @@
-const CLIENT_ID = '493022954051-0jar5jadmigsuikpv9qnt1fevjd5661d.apps.googleusercontent.com';
+import {CLIENT_ID} from '../config/index.json';
 const SCOPES = ['https://www.googleapis.com/auth/tasks', 'https://www.googleapis.com/auth/plus.me'];
 
 export default {
