@@ -99,7 +99,7 @@ class TasksPageContainer extends React.Component {
     }
 
     _onChange = () => {
-        this.setState(getStateFromFlux());
+         this.setState(getStateFromFlux());
     }
 };
 

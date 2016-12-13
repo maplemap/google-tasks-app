@@ -25,6 +25,12 @@ const TasksActions = {
     },
 
     updateTaskStatus(params) {
+        AppDispatcher.dispatch({
+            type: AppConstants.TASK_UPDATE_REQUEST,
+            taskID: params.taskID,
+            text: params.text
+        });
+
         api.updateTask({
             taskListID: params.taskListID,
             taskID: params.taskID,
