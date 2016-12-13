@@ -20,9 +20,21 @@ function formatTask(data) {
     }
 }
 
+function getErrorMessageByCode(code) {
+    const errorMessages = {
+        400: 'Cannot load task list'
+    }
+
+    return errorMessages[code] || 'Something bad happened'
+}
+
 const TasksStore = Object.assign({}, EventEmitter.prototype, {
     getTasks() {
         return _tasks;
+    },
+
+    getError() {
+        return _error;
     },
 
     isLoadingTasks() {
@@ -43,6 +55,7 @@ const TasksStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(function(action) {
+    console.log(action.type);
     switch (action.type) {
         case AppConstants.TASKS_LOAD_REQUEST: {
             _tasks = [];
@@ -54,14 +67,25 @@ AppDispatcher.register(function(action) {
         case AppConstants.TASKS_LOAD_SUCCESS: {
             _tasks = action.items.map(formatTask);
             _isLoading = false;
+            console.log(_tasks);
 
             TasksStore.emitChange();
             break;
         }
         case AppConstants.TASKS_LOAD_FAIL: {
             _tasks = [];
-            _error = action.error;
+            _error = getErrorMessageByCode(action.error.code);
             _isLoading = false;
+
+            TasksStore.emitChange();
+            break;
+        }
+        case AppConstants.TASK_UPDATE_REQUEST: {
+            const updatedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
+            console.log(_tasks[updatedTaskIndex].isCompleted);
+            _tasks[updatedTaskIndex].isCompleted = action.isCompleted !== undefined ? action.isCompleted : _tasks[updatedTaskIndex];
+            console.log(action.text);
+            _tasks[updatedTaskIndex].text = action.text || _tasks[updatedTaskIndex].text;
 
             TasksStore.emitChange();
             break;
