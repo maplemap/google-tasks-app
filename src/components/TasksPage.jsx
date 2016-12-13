@@ -29,6 +29,17 @@ class TasksPage extends React.Component {
     }
 
     render() {
+        if(this.props.error) {
+            return (
+                <div className="TasksPage">
+                    <div className="TaskdPage__error">
+                        {this.props.error}
+                    </div>
+                </div>
+            )
+        }
+
+
         return (
             <div className='TasksPage'>
                 <div className='TasksPage__header'>
