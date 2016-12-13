@@ -2,6 +2,7 @@ import React from 'react';
 
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import CircularProgress from 'material-ui/CircularProgress';
 
 import Task from './Task.jsx';
 import './TasksPage.less';
@@ -9,6 +10,24 @@ import './TasksPage.less';
 
 
 class TasksPage extends React.Component {
+    _renderTasks = () => {
+        return (
+            <div className='TasksPage__tasks'>
+                {
+                    this.props.tasks.map(task =>
+                        <Task
+                            key={task.id}
+                            text={task.text}
+                            isCompleted={task.isCompleted}
+                            onStatusChange={this.props.onTaskStatusChange.bind(null, task.id)}
+                            onUpdate={this.props.onTaskUpdate.bind(null, task.id)}
+                        />
+                    )
+                }
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className='TasksPage'>
@@ -21,19 +40,13 @@ class TasksPage extends React.Component {
                     </div>
                 </div>
 
-                <div className='TasksPage__tasks'>
-                    {
-                        this.props.tasks.map(task =>
-                            <Task
-                                key={task.id}
-                                text={task.text}
-                                isCompleted={task.isCompleted}
-                                onStatusChange={this.props.onTaskStatusChange.bind(null, task.id)}
-                                onUpdate={this.props.onTaskUpdate.bind(null, task.id)}
-                            />
-                        )
-                    }
-                </div>
+                {
+                    this.props.isLoadingTasks
+                    ?
+                        <CircularProgress />
+                    :
+                        this._renderTasks()
+                }
             </div>
         );
     }
