@@ -56,9 +56,6 @@ class TasklistsPageContainer extends React.Component {
     }
 
     render() {
-        const { router } = this.context;
-
-
         return (
             <div>
                 <TasklistsPage
@@ -67,6 +64,8 @@ class TasklistsPageContainer extends React.Component {
                     page={this.props.children}
                     onAddTaskList={this.handleAddTaskList}
                     onLogOut={this.onLogOut}
+                    currentListID={this.props.params.id}
+
                 />
                 <TaskListCreateModal
                     isOpen={this.state.isCreatingTaskList}
@@ -80,10 +79,6 @@ class TasklistsPageContainer extends React.Component {
     _onChange = () => {
         this.setState(getStateFromFlux());
     }
-};
-
-TasklistsPage.contextTypes = {
-  router: React.PropTypes.object.isRequired
 };
 
 export default TasklistsPageContainer;

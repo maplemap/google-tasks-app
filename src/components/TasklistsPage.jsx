@@ -40,6 +40,7 @@ class TasklistsPage extends React.Component {
                             {
                                 this.props.taskLists.map(list =>
                                     <ListItem
+                                        className={this.props.currentListID === list.id ? 'TasklistsPage__list--current': ''}
                                         key={list.id}
                                         leftIcon={<FolderIcon />}
                                         primaryText={list.name}
