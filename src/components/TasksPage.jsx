@@ -21,6 +21,7 @@ class TasksPage extends React.Component {
                             isCompleted={task.isCompleted}
                             onStatusChange={this.props.onTaskStatusChange.bind(null, task.id)}
                             onUpdate={this.props.onTaskUpdate.bind(null, task.id)}
+                            onDelete={this.props.onTaskDelete.bind(null, task.id)}
                         />
                     )
                 }
@@ -43,7 +44,7 @@ class TasksPage extends React.Component {
         return (
             <div className='TasksPage'>
                 <div className='TasksPage__header'>
-                    <h2 className='TasksPage__title'>List name</h2>
+                    <h2 className='TasksPage__title'>{this.props.taskList ? this.props.taskList.name : ''}</h2>
                     <div className='TasksPage__tools'>
                         <IconButton onClick={this.props.onAddTask}>
                             <ContentAdd />

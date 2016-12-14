@@ -64,14 +64,15 @@ AppDispatcher.register(function(action) {
             TasksStore.emitChange();
             break;
         }
+
         case AppConstants.TASKS_LOAD_SUCCESS: {
             _tasks = action.items.map(formatTask);
             _isLoading = false;
-            console.log(_tasks);
 
             TasksStore.emitChange();
             break;
         }
+
         case AppConstants.TASKS_LOAD_FAIL: {
             _tasks = [];
             _error = getErrorMessageByCode(action.error.code);
@@ -80,16 +81,16 @@ AppDispatcher.register(function(action) {
             TasksStore.emitChange();
             break;
         }
+
         case AppConstants.TASK_UPDATE_REQUEST: {
             const updatedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
-            console.log(_tasks[updatedTaskIndex].isCompleted);
             _tasks[updatedTaskIndex].isCompleted = action.isCompleted !== undefined ? action.isCompleted : _tasks[updatedTaskIndex];
-            console.log(action.text);
             _tasks[updatedTaskIndex].text = action.text || _tasks[updatedTaskIndex].text;
 
             TasksStore.emitChange();
             break;
         }
+
         case AppConstants.TASK_UPDATE_SUCCESS: {
             const updatedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
             _tasks[updatedTaskIndex] = formatTask(action.task);
@@ -97,9 +98,18 @@ AppDispatcher.register(function(action) {
             TasksStore.emitChange();
             break;
         }
+
         case AppConstants.TASK_CREATE_SUCCESS: {
             const newTask = formatTask(action.task);
             _tasks.unshift(newTask);
+
+            TasksStore.emitChange();
+            break;
+        }
+
+        case AppConstants.TASK_DELETE_SUCCESS: {
+            const deletedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
+            _tasks.splice(deletedTaskIndex, 1);
 
             TasksStore.emitChange();
             break;

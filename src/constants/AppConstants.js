@@ -6,6 +6,8 @@ export default keyMirror({
 
     TASK_LISTS_LOAD_SUCCESS      : null,
     TASK_LISTS_LOAD_FAIL         : null,
+    TASK_LIST_LOAD_SUCCESS       : null,
+    TASK_LIST_LOAD_FAIL          : null,
     TASK_LIST_CREATE_SUCCESS     : null,
     TASK_LIST_CREATE_FAIL        : null,
 
@@ -16,5 +18,7 @@ export default keyMirror({
     TASK_UPDATE_SUCCESS          : null,
     TASK_UPDATE_FAIL             : null,
     TASK_CREATE_SUCCESS          : null,
-    TASK_CREATE_FAIL             : null
+    TASK_CREATE_FAIL             : null,
+    TASK_DELETE_SUCCESS          : null,
+    TASK_DELETE_FAIL             : null
 });

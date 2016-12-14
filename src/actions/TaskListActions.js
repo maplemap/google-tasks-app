@@ -20,6 +20,22 @@ const TaskListActions = {
             });
     },
 
+    getTaskList(taskListID) {
+        api.getTaskList(taskListID)
+            .then(data => {
+                AppDispatcher.dispatch({
+                    type: AppConstants.TASK_LIST_LOAD_SUCCESS,
+                    taskList: data
+                });
+            })
+            .catch(err => {
+                AppDispatcher.dispatch({
+                    type: AppConstants.TASK_LIST_LOAD_FAIL,
+                    error: err
+                });
+            });
+    },
+
     createTaskList(params) {
         api.inserTaskList({title: params.name})
             .then(data => {
