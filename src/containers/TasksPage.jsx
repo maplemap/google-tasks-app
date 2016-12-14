@@ -64,6 +64,13 @@ class TasksPageContainer extends React.Component {
         this.setState({ isCreatingTask : true });
     }
 
+    handleTaskDelete = (taskID) => {
+        TasksActions.deleteTask({
+            taskListID: this.props.params.id,
+            taskID: taskID,
+        });
+    }
+
     handleClose = () => {
         this.setState({ isCreatingTask : false });
     }
@@ -87,7 +94,7 @@ class TasksPageContainer extends React.Component {
                     // onUpdateTaskList={this.handleUpdateTaskList}
                     onAddTask={this.handleAddTask}
                     // onDeleteTaskList={this.handleDeleteTaskList}
-                    // onTaskDelete={this.handleTaskDelete}
+                    onTaskDelete={this.handleTaskDelete}
                     onTaskStatusChange={this.handleTaskStatusChange}
                     onTaskUpdate={this.handleTaskUpdate}
                 />

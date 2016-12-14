@@ -100,7 +100,7 @@ class Task extends React.Component{
 
                     <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}>
                         <MenuItem onClick={this.handleEdit}>Edit</MenuItem>
-                        <MenuItem>Delete</MenuItem>
+                        <MenuItem onClick={this.props.onDelete}>Delete</MenuItem>
                     </IconMenu>
                 </div>
         );

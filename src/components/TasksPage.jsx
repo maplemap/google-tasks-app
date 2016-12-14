@@ -21,6 +21,7 @@ class TasksPage extends React.Component {
                             isCompleted={task.isCompleted}
                             onStatusChange={this.props.onTaskStatusChange.bind(null, task.id)}
                             onUpdate={this.props.onTaskUpdate.bind(null, task.id)}
+                            onDelete={this.props.onTaskDelete.bind(null, task.id)}
                         />
                     )
                 }
