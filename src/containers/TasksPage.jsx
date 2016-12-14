@@ -2,6 +2,8 @@ import React from 'react';
 
 import TasksActions from '../actions/TasksActions';
 import TasksStore from '../stores/TasksStore';
+import TaskListActions from '../actions/TaskListActions';
+import TaskListsStore from '../stores/TaskListsStore';
 
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -12,6 +14,7 @@ import TaskCreateModal from '../components/TaskCreateModal.jsx';
 
 function getStateFromFlux() {
     return {
+        taskList: TaskListsStore.getCurrentTaskList(),
         tasks: TasksStore.getTasks(),
         error: TasksStore.getError(),
         isLoadingTasks: TasksStore.isLoadingTasks()
@@ -28,20 +31,24 @@ class TasksPageContainer extends React.Component {
         };
 
         TasksActions.loadTasks(this.props.params.id);
+        TaskListActions.getTaskList(this.props.params.id);
     }
 
     componentDidMount() {
+        TasksStore.addChangeListener(this._onChange);
         TasksStore.addChangeListener(this._onChange);
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.params.id !== nextProps.params.id) {
             TasksActions.loadTasks(nextProps.params.id);
+            TaskListActions.getTaskList(nextProps.params.id);
         }
     }
 
     componentWillUnmount() {
         TasksStore.removeChangeListener(this._onChange);
+        TaskListActions.removeChangeListener(this._onChange);
     }
 
     handleTaskStatusChange = (taskID, { isCompleted }) => {
@@ -84,10 +91,11 @@ class TasksPageContainer extends React.Component {
     }
 
     render() {
+        console.log(this.state.taskList);
         return (
             <div>
                 <TasksPage
-                    // taskList={this.state.taskList}
+                    taskList={this.state.taskList}
                     tasks={this.state.tasks}
                     error={this.state.error}
                     isLoadingTasks={this.state.isLoadingTasks}

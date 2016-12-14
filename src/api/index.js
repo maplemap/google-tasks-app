@@ -28,6 +28,14 @@ export default {
         return this.makeRequest(request);
     },
 
+    getTaskList(taskListID) {
+        const request = gapi.client.tasks.tasklists.get({
+            tasklist: taskListID
+        });
+
+        return this.makeRequest(request);
+    },
+
     inserTaskList({title}) {
         const request = gapi.client.tasks.tasklists.insert({
             title: title

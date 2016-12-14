@@ -44,7 +44,7 @@ class TasksPage extends React.Component {
         return (
             <div className='TasksPage'>
                 <div className='TasksPage__header'>
-                    <h2 className='TasksPage__title'>List name</h2>
+                    <h2 className='TasksPage__title'>{this.props.taskList ? this.props.taskList.name : ''}</h2>
                     <div className='TasksPage__tools'>
                         <IconButton onClick={this.props.onAddTask}>
                             <ContentAdd />
