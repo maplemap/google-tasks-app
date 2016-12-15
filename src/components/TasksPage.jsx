@@ -18,10 +18,12 @@ class TasksPage extends React.Component {
                         <Task
                             key={task.id}
                             text={task.text}
+                            note={task.note}
+                            due={task.due}
                             isCompleted={task.isCompleted}
+                            onDelete={this.props.onTaskDelete.bind(null, task.id)}
                             onStatusChange={this.props.onTaskStatusChange.bind(null, task.id)}
                             onUpdate={this.props.onTaskUpdate.bind(null, task.id)}
-                            onDelete={this.props.onTaskDelete.bind(null, task.id)}
                         />
                     )
                 }

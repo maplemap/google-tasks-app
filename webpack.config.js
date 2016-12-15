@@ -52,7 +52,10 @@ module.exports = {
                 loader: 'babel',
                 query: {
                     presets: ["es2015", "stage-0", "react"],
-                    plugins: ["react-hot-loader/babel"]
+                    plugins: (process.env.NODE_ENV === "production")
+                             ? []
+                             : ["react-hot-loader/babel"]
+
                 }
             }
         ]

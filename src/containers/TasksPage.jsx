@@ -59,11 +59,11 @@ class TasksPageContainer extends React.Component {
         });
     }
 
-    handleTaskUpdate = (taskID, { text }) => {
+    handleTaskUpdate = (taskID, task) => {
         TasksActions.updateTask({
             taskListID: this.props.params.id,
             taskID: taskID,
-            text: text
+            ...task
         });
     }
 
@@ -91,7 +91,6 @@ class TasksPageContainer extends React.Component {
     }
 
     render() {
-        console.log(this.state.taskList);
         return (
             <div>
                 <TasksPage
@@ -99,9 +98,7 @@ class TasksPageContainer extends React.Component {
                     tasks={this.state.tasks}
                     error={this.state.error}
                     isLoadingTasks={this.state.isLoadingTasks}
-                    // onUpdateTaskList={this.handleUpdateTaskList}
                     onAddTask={this.handleAddTask}
-                    // onDeleteTaskList={this.handleDeleteTaskList}
                     onTaskDelete={this.handleTaskDelete}
                     onTaskStatusChange={this.handleTaskStatusChange}
                     onTaskUpdate={this.handleTaskUpdate}
