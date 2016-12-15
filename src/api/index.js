@@ -44,6 +44,14 @@ export default {
         return this.makeRequest(request);
     },
 
+    deleteTaskList({ taskListID }) {
+        const request = gapi.client.tasks.tasklists.delete({
+            tasklist: taskListID
+        });
+
+        return this.makeRequest(request);
+    },
+
     listTasks(taskListID) {
         const request = gapi.client.tasks.tasks.list({
             tasklist: taskListID

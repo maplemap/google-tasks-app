@@ -2,6 +2,7 @@ import React from 'react';
 
 import IconButton from 'material-ui/IconButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import Task from './Task.jsx';
@@ -50,6 +51,9 @@ class TasksPage extends React.Component {
                     <div className='TasksPage__tools'>
                         <IconButton onClick={this.props.onAddTask}>
                             <ContentAdd />
+                        </IconButton>
+                        <IconButton onClick={this.props.onDeleteTaskList}>
+                            <ActionDelete />
                         </IconButton>
                     </div>
                 </div>

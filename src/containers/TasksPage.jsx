@@ -36,7 +36,7 @@ class TasksPageContainer extends React.Component {
 
     componentDidMount() {
         TasksStore.addChangeListener(this._onChange);
-        TasksStore.addChangeListener(this._onChange);
+        TaskListsStore.addChangeListener(this._onChange);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -48,7 +48,7 @@ class TasksPageContainer extends React.Component {
 
     componentWillUnmount() {
         TasksStore.removeChangeListener(this._onChange);
-        TaskListActions.removeChangeListener(this._onChange);
+        TaskListsStore.removeChangeListener(this._onChange);
     }
 
     handleTaskStatusChange = (taskID, { isCompleted }) => {
@@ -90,6 +90,20 @@ class TasksPageContainer extends React.Component {
         this.setState({ isCreatingTask : false });
     }
 
+    handleDeleteTaskList = () => {
+        const isConfirmed = confirm(
+            'Are you sure you want delete this task list? All tasks in it will be deleted too'
+        );
+
+        if (isConfirmed) {
+            TaskListActions.deleteTaskList({
+                taskListID: this.props.params.id
+            });
+        }
+
+        this.context.router.push('/lists');
+    }
+
     render() {
         return (
             <div>
@@ -102,6 +116,7 @@ class TasksPageContainer extends React.Component {
                     onTaskDelete={this.handleTaskDelete}
                     onTaskStatusChange={this.handleTaskStatusChange}
                     onTaskUpdate={this.handleTaskUpdate}
+                    onDeleteTaskList={this.handleDeleteTaskList}
                 />
                 <TaskCreateModal
                     isOpen={this.state.isCreatingTask}
@@ -115,6 +130,10 @@ class TasksPageContainer extends React.Component {
     _onChange = () => {
          this.setState(getStateFromFlux());
     }
+};
+
+TasksPageContainer.contextTypes = {
+  router: React.PropTypes.object.isRequired
 };
 
 export default TasksPageContainer;

@@ -81,6 +81,25 @@ AppDispatcher.register(function(action) {
             break;
         }
 
+        case AppConstants.TASK_LIST_DELETE_SUCCESS: {
+            const deletedTaskListIndex = _taskLists.findIndex(taskList => taskList.id === action.taskListID);
+            _taskLists.splice(deletedTaskListIndex, 1);
+
+            if (_currentTaskList && _currentTaskList.id === action.taskListID) {
+                _currentTaskList = null;
+            }
+
+            TaskListsStore.emitChange();
+            break;
+        }
+
+        case AppConstants.TASK_LIST_DELETE_FAIL: {
+            _error = action.error;
+
+            TaskListsStore.emitChange();
+            break;
+        }
+
         default: {
 
         }

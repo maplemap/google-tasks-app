@@ -50,6 +50,22 @@ const TaskListActions = {
                     error: err
                 })
             })
+    },
+
+    deleteTaskList(params) {
+        api.deleteTaskList({ taskListID: params.taskListID })
+        .then(data => {
+            AppDispatcher.dispatch({
+                type       : AppConstants.TASK_LIST_DELETE_SUCCESS,
+                taskListID : params.taskListID
+            });
+        })
+        .catch(err => {
+            AppDispatcher.dispatch({
+                type  : AppConstants.TASK_LIST_DELETE_FAIL,
+                error : err
+            });
+        });
     }
 };
 
