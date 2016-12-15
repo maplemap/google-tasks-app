@@ -3,20 +3,23 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
 
 class TaskCreateModal extends React.Component{
     constructor(props) {
         super(props);
 
         this.state = {
-            text : ''
+            text : '',
+            note : '',
+            due  : null
         }
     }
 
     handleClose = () => {
         const { onClose } = this.props;
 
-        this.setState({ text: '' });
+        this.resetState();
 
         if (onClose) {
             onClose();
@@ -28,16 +31,38 @@ class TaskCreateModal extends React.Component{
 
         if (onSubmit) {
             onSubmit({
-                text: this.state.text
+                text: this.state.text,
+                note: this.state.note,
+                due: this.state.due
             });
         }
 
-        this.setState({ text: '' });
+        this.resetState();
     }
 
     handleTextChange =  (e) => {
         this.setState({
             text: e.target.value
+        });
+    }
+
+    handleNoteChange = (e) => {
+        this.setState({
+            note: e.target.value
+        });
+    }
+
+    handleDueChange = (e, date) => {
+        this.setState({
+            due: date
+        });
+    }
+
+    resetState = () => {
+        this.setState({
+            text: '',
+            note: '',
+            due: null
         });
     }
 
@@ -72,6 +97,20 @@ class TaskCreateModal extends React.Component{
                     onChange={this.handleTextChange}
                     hintText='e.g. buy a bottle of milk'
                     floatingLabelText='Enter task description'
+                />
+                <TextField
+                    fullWidth
+                    value={this.state.note}
+                    onChange={this.handleNoteChange}
+                    hintText='e.g. 2.6% whole milk'
+                    floatingLabelText='Enter task note'
+                />
+                <DatePicker
+                    autoOk
+                    fullWidth
+                    value={this.state.due}
+                    onChange={this.handleDueChange}
+                    floatingLabelText='Enter due time'
                 />
             </Dialog>
         );

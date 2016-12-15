@@ -13,8 +13,8 @@ function formatTask(data) {
     return {
         id: data.id,
         text: data.title,
-        notes: data.notes,
-        dueTime: data.due ? new Date(data.due) : '',
+        note: data.notes,
+        due: data.due ? new Date(data.due) : '',
         isCompleted: data.status === 'completed',
         position: data.position
     }
@@ -55,7 +55,7 @@ const TasksStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 AppDispatcher.register(function(action) {
-    console.log(action.type);
+    console.log(action);
     switch (action.type) {
         case AppConstants.TASKS_LOAD_REQUEST: {
             _tasks = [];
@@ -84,7 +84,8 @@ AppDispatcher.register(function(action) {
 
         case AppConstants.TASK_UPDATE_REQUEST: {
             const updatedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
-            _tasks[updatedTaskIndex].isCompleted = action.isCompleted !== undefined ? action.isCompleted : _tasks[updatedTaskIndex];
+
+            _tasks[updatedTaskIndex].isCompleted = action.isCompleted !== undefined ? action.isCompleted : _tasks[updatedTaskIndex].isCompleted;
             _tasks[updatedTaskIndex].text = action.text || _tasks[updatedTaskIndex].text;
 
             TasksStore.emitChange();
@@ -99,17 +100,17 @@ AppDispatcher.register(function(action) {
             break;
         }
 
-        case AppConstants.TASK_CREATE_SUCCESS: {
-            const newTask = formatTask(action.task);
-            _tasks.unshift(newTask);
+        case AppConstants.TASK_DELETE_SUCCESS: {
+            const deletedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
+            _tasks.splice(deletedTaskIndex, 1);
 
             TasksStore.emitChange();
             break;
         }
 
-        case AppConstants.TASK_DELETE_SUCCESS: {
-            const deletedTaskIndex = _tasks.findIndex(task => task.id === action.taskID);
-            _tasks.splice(deletedTaskIndex, 1);
+        case AppConstants.TASK_CREATE_SUCCESS: {
+            const newTask = formatTask(action.task);
+            _tasks.unshift(newTask);
 
             TasksStore.emitChange();
             break;

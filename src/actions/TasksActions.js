@@ -28,7 +28,7 @@ const TasksActions = {
         AppDispatcher.dispatch({
             type: AppConstants.TASK_UPDATE_REQUEST,
             taskID: params.taskID,
-            text: params.text
+            isCompleted : params.isCompleted
         });
 
         api.updateTask({
@@ -71,10 +71,17 @@ const TasksActions = {
     },
 
     updateTask(params) {
+        AppDispatcher.dispatch({
+            type   : AppConstants.TASK_UPDATE_REQUEST,
+            taskID : params.taskID,
+            text : params.text
+        });
+
         api.updateTask({
             taskListID: params.taskListID,
             taskID: params.taskID,
-            title: params.text
+            title: params.text,
+            notes: params.note
         })
         .then(data => {
             AppDispatcher.dispatch({
