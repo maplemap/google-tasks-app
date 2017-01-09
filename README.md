@@ -1,4 +1,4 @@
-## Observer of photo albums for VK on React.js/Flux
+## Google tasks application on React.js/Flux
 
 ####[Demo](https://maplemap.github.io/google-tasks-app)
 
