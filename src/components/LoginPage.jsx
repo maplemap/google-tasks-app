@@ -18,7 +18,7 @@ class LoginPage extends React.Component {
                         />
                     </div>
                     <img
-                        src='/img/desk.png'
+                        src='./img/desk.png'
                         className='LoginPage__image'
                     />
                 </div>
