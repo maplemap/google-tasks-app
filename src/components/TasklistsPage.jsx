@@ -54,14 +54,14 @@ class TasklistsPage extends React.Component {
                                 onClick={this.props.onAddTaskList}
                             />
                         </List>
-                        <Divider />
+                        {/* <Divider />
                         <List className='TasklistsPage__list'>
                             <ListItem
                                 leftIcon={<ExitIcon />}
                                 primaryText="Log out"
                                 onClick={this.props.onLogOut}
                             />
-                        </List>
+                        </List> */}
                     </List>
                 </div>
                 <div className='TasklistsPage__tasks'>
