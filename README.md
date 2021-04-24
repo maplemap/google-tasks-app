@@ -1,6 +1,6 @@
 ## Google tasks application on React.js/Flux
 
-####[Demo](https://maplemap.github.io/google-tasks-app)
+[Demo](https://maplemap.github.io/google-tasks-app)
 
 ### Installation (development)
 1. clone or download project
